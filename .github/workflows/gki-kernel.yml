@@ -550,13 +550,28 @@ jobs:
           echo "CONFIG_NF_CONNTRACK=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_NF_CONNTRACK_IPV4=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_NF_CONNTRACK_IPV6=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP_NF_MANGLE=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP_NF_NAT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP_NF_RAW=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NF_DEFRAG_IPV6=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
+          # --- IPv4 iptables ---
           echo "CONFIG_IP_NF_FILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP_NF_MANGLE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP_NF_RAW=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP_NF_NAT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
+          # --- IPv6 iptables ---
+          echo "CONFIG_IP6_NF_IPTABLES=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_MATCH_IPV6HEADER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_MATCH_RPFILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_MATCH_RT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_FILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_MANGLE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_RAW=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_IP6_NF_NAT=y" >> ./common/arch/arm64/configs/gki_defconfig
-
-          # --- IPSet Support (Comprehensive) ---
+          echo "CONFIG_IP6_NF_TARGET_REJECT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_TARGET_MASQUERADE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_TARGET_SYNPROXY=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
+          # --- IPSets ---
           echo "CONFIG_IP_SET=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_IP_SET_MAX=65534" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_IP_SET_BITMAP_IP=y" >> ./common/arch/arm64/configs/gki_defconfig
@@ -575,21 +590,55 @@ jobs:
           echo "CONFIG_IP_SET_HASH_NETPORT=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_IP_SET_HASH_NETIFACE=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_IP_SET_LIST_SET=y" >> ./common/arch/arm64/configs/gki_defconfig
-
-          # --- Netfilter Matches (xt_tables) ---
+          
+          # --- xtables matches ---
           echo "CONFIG_NETFILTER_XT_MATCH_ADDRTYPE=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_NETFILTER_XT_MATCH_COMMENT=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_NETFILTER_XT_MATCH_OWNER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NETFILTER_XT_MATCH_MARK=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NETFILTER_XT_MATCH_SOCKET=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_NETFILTER_XT_SET=y" >> ./common/arch/arm64/configs/gki_defconfig
-
-          # --- Netfilter Targets ---
+          
+          # --- xtables targets ---
           echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NETFILTER_XT_TARGET_MARK=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_NETFILTER_XT_TARGET_TPROXY=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_IP6_NF_TARGET_MASQUERADE=y" >> ./common/arch/arm64/configs/gki_defconfig
-
-          # --- Other necessary configs ---
+          
+          # --- fwmark / route table support ---
+          echo "CONFIG_IP_MULTIPLE_TABLES=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
+          # --- Netfilter netlink ---
+          echo "CONFIG_NETFILTER_NETLINK=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NETFILTER_NETLINK_QUEUE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NETFILTER_NETLINK_LOG=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
+          # --- eBPF 基础 ---
+          echo "CONFIG_BPF=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_SYSCALL=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_JIT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_UNPRIV_DEFAULT_OFF=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_LSM=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_EVENTS=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_BPF_STREAM_PARSER=y" >> ./common/arch/arm64/configs/gki_defconfig
-
+          echo "CONFIG_BPF_NETFILTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_HAVE_EBPF_JIT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_SOCKMAP=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_XDP_SOCKETS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_SK_MSG=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_BPF_SK_REUSEPORT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_CLS_BPF=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_ACT_BPF=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_LWTUNNEL_BPF=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_SCH_INGRESS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_CLS_ACT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
+          # --- Tracing for BPF ---
+          echo "CONFIG_FTRACE_SYSCALLS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_FUNCTION_TRACER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_FUNCTION_GRAPH_TRACER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_DYNAMIC_FTRACE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TRACER_SNAPSHOT=y" >> ./common/arch/arm64/configs/gki_defconfig
           # Remove check_defconfig
           sed -i 's/check_defconfig//' ./common/build.config.gki
 
