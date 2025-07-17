@@ -1,0 +1,47 @@
+diff --git a/kernel/selinux/selinux.h b/kernel/selinux/selinux.h
+index 1234567..8901234 100644
+--- a/kernel/selinux/selinux.h
++++ b/kernel/selinux/selinux.h
+@@ -1,8 +1,8 @@
+ #ifndef __KSU_H_SELINUX
+ #define __KSU_H_SELINUX
+ 
+-void setenforce(bool);
++void ksu_setenforce(bool);
+ 
+-bool getenforce();
++bool ksu_getenforce();
+ 
+ #endif
+diff --git a/kernel/selinux/rules.h b/kernel/selinux/rules.h
+index 2345678..9012345 100644
+--- a/kernel/selinux/rules.h
++++ b/kernel/selinux/rules.h
+@@ -1,6 +1,6 @@
+ #ifndef __KSU_H_SELINUX_RULES
+ #define __KSU_H_SELINUX_RULES
+ 
+-void apply_kernelsu_rules();
++void ksu_apply_kernelsu_rules();
+ 
+ #endif
+diff --git a/kernel/core_hook.h b/kernel/core_hook.h
+index 3456789..0123456 100644
+--- a/kernel/core_hook.h
++++ b/kernel/core_hook.h
+@@ -1,6 +1,15 @@
+ #ifndef __KSU_H_CORE_HOOK
+ #define __KSU_H_CORE_HOOK
+ 
++// Forward declarations for KSU functions
++#ifdef CONFIG_KSU
++void ksu_setenforce(bool enforce);
++bool ksu_getenforce(void);
++void ksu_apply_kernelsu_rules(void);
++#endif
++
++// Other core hook declarations
++
+ int ksu_handle_setuid(struct cred *new, const struct cred *old);
+ 
+ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
