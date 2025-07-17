@@ -318,6 +318,7 @@ jobs:
               patch -p1 --fuzz=3 --forward < selinux.patch
               patch -p1 --fuzz=3 --forward < rules.c.patch
               patch -p1 --fuzz=3 --forward < fix_ksu_symbols.patch
+              patch -p1 --fuzz=3 --forward < fix_cfi_symbols.patch
             fi
             
           elif [ "${{ inputs.kernelsu_variant }}" == "MKSU" ]; then

@@ -1,0 +1,26 @@
+diff --git a/kernel/ksud.c b/kernel/ksud.c
+index 1234567..8901234 100644
+--- a/kernel/ksud.c
++++ b/kernel/ksud.c
+@@ -1,6 +1,20 @@
+ #include "linux/cred.h"
+ #include "linux/dcache.h"
+ #include "linux/err.h"
++
++// Add compatibility wrappers for renamed functions
++#ifdef CONFIG_KSU
++extern bool ksu_getenforce(void);
++extern void ksu_apply_kernelsu_rules(void);
++
++// Wrapper functions to maintain compatibility
++bool getenforce(void) {
++    return ksu_getenforce();
++}
++
++void apply_kernelsu_rules(void) {
++    ksu_apply_kernelsu_rules();
++}
++#endif
+ 
+ #include "linux/file.h"
+ #include "linux/fs.h"
