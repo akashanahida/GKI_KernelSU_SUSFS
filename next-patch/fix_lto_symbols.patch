@@ -1,0 +1,83 @@
+diff --git a/kernel/selinux/selinux.c b/kernel/selinux/selinux.c
+index 798629d5..e171e010 100644
+--- a/kernel/selinux/selinux.c
++++ b/kernel/selinux/selinux.c
+@@ -71,6 +71,15 @@ void ksu_setenforce(bool enforce)
+ #endif
+ }
+ 
++// Export wrapper function for compatibility
++void setenforce(bool enforce)
++{
++	ksu_setenforce(enforce);
++}
++EXPORT_SYMBOL(setenforce);
++
++EXPORT_SYMBOL(ksu_setenforce);
++
+ bool ksu_getenforce()
+ {
+ #ifdef CONFIG_SECURITY_SELINUX_DISABLE
+@@ -84,6 +93,15 @@ bool ksu_getenforce()
+ #endif
+ }
+ 
++// Export wrapper function for compatibility
++bool getenforce(void)
++{
++	return ksu_getenforce();
++}
++EXPORT_SYMBOL(getenforce);
++
++EXPORT_SYMBOL(ksu_getenforce);
++
+ int ksu_selinux_init(void)
+ {
+ 	return 0;
+diff --git a/kernel/selinux/rules.c b/kernel/selinux/rules.c
+index 5d832686..ab123456 100644
+--- a/kernel/selinux/rules.c
++++ b/kernel/selinux/rules.c
+@@ -146,6 +146,15 @@ void ksu_apply_kernelsu_rules()
+ 	mutex_unlock(&ksu_rules);
+ }
+ 
++// Export wrapper function for compatibility
++void apply_kernelsu_rules(void)
++{
++	ksu_apply_kernelsu_rules();
++}
++EXPORT_SYMBOL(apply_kernelsu_rules);
++
++EXPORT_SYMBOL(ksu_apply_kernelsu_rules);
++
+ void ksu_selinux_init(void)
+ {
+ 	// do nothing
+diff --git a/kernel/selinux/selinux.h b/kernel/selinux/selinux.h
+index 1234567..8901234 100644
+--- a/kernel/selinux/selinux.h
++++ b/kernel/selinux/selinux.h
+@@ -3,6 +3,10 @@
+ 
+ void ksu_setenforce(bool);
+ bool ksu_getenforce();
++
++// Compatibility wrappers
++void setenforce(bool);
++bool getenforce(void);
+ 
+ #endif
+diff --git a/kernel/selinux/rules.h b/kernel/selinux/rules.h
+index 2345678..9012345 100644
+--- a/kernel/selinux/rules.h
++++ b/kernel/selinux/rules.h
+@@ -2,5 +2,8 @@
+ #define __KSU_H_SELINUX_RULES
+ 
+ void ksu_apply_kernelsu_rules();
++
++// Compatibility wrapper
++void apply_kernelsu_rules(void);
+ 
+ #endif
